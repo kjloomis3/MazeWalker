@@ -10,6 +10,7 @@ import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -17,6 +18,9 @@ import maze.MazePanel;
 import mazewalker.BrilliantMazeWalker;
 import mazewalker.GeniusMazeWalker;
 import mazewalker.MazeWalker;
+import mazewalker.RandomMazeWalker;
+import mazewalker.SmartMazeWalker;
+import mazewalker.SmarterMazeWalker;
 
 /**
  * Creates the graphic user interface for the program. It includes
@@ -27,8 +31,9 @@ import mazewalker.MazeWalker;
  */
 public class UserInterface extends JPanel
 {
-
+	private static final String [] walkerList = { "Random", "Smart", "Smarter", "Brilliant", "Genius" };
 	private MazePanel maze;
+	private JComboBox<String> walkerChoice;
 	private JButton reset;
 	private JButton step;
 	private MazeWalker walker;
@@ -44,9 +49,7 @@ public class UserInterface extends JPanel
 	 */
 	public UserInterface ( int size )
 	{
-		ResetWalker( );
-		
-		
+		walker = null;
 		maze = new MazePanel ( size );
 
 		this.add( maze );
@@ -61,11 +64,18 @@ public class UserInterface extends JPanel
 		buttonPanel.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
 		buttonPanel.setLayout( new BoxLayout(buttonPanel, BoxLayout.LINE_AXIS));
 
+		walkerChoice = new JComboBox<String>( walkerList );
+		buttonPanel.add(walkerChoice);
+		walkerChoice.setSelectedIndex(0);
+		walkerChoice.addActionListener ( listener );
+		buttonPanel.add(Box.createRigidArea(new Dimension(5, 0)));
+		
 		reset = new JButton ( "Reset" );
 		buttonPanel.add(reset);
 		reset.setActionCommand( "RESET" );
 		reset.addActionListener( listener );
 		buttonPanel.add(Box.createRigidArea(new Dimension(5, 0)));
+		
 		step = new JButton ( "Step" );
 		buttonPanel.add(step);
 		step.setActionCommand( "STEP" );
@@ -75,13 +85,17 @@ public class UserInterface extends JPanel
 
 	}
 
-	private void ResetWalker ( )
+	private void ResetWalker ( int choice )
 	{
-		//walker = new RandomMazeWalker();
-		//walker = new SmartMazeWalker();
-		//walker = new SmarterMazeWalker();
-		walker = new BrilliantMazeWalker();
-		//walker = new GeniusMazeWalker();
+		switch ( walkerList[choice] )
+		{
+			case "Genius": walker = new GeniusMazeWalker(); break;
+			case "Brilliant": walker = new BrilliantMazeWalker(); break;
+			case "Smarter": walker = new SmarterMazeWalker(); break;
+			case "Smart": walker = new SmartMazeWalker(); break;
+			case "Random":
+			default: walker = new RandomMazeWalker(); break;
+		}
 	}
 
 	/**
@@ -106,9 +120,15 @@ public class UserInterface extends JPanel
 			case "RESET":
 				maze.Reset();
 				step.setEnabled(true);
-				ResetWalker ( );
+				walkerChoice.setEnabled(true);
+				walker = null;
 				break;
 			case "STEP":
+				if ( walker == null )
+				{
+					ResetWalker ( walkerChoice.getSelectedIndex() );
+					walkerChoice.setEnabled(false);
+				}
 				walker.Solve ( maze );
 				break;
 			}
