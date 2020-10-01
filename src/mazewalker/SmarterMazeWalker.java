@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Stack;
 
 import maze.MazePanel;
+import maze.MazePanel.Direction;
 
 /**
  * This class represents a "walker." The smarter walker remembers the previous
@@ -52,7 +53,7 @@ public class SmarterMazeWalker extends MazeWalker
 			case UP:
 					if ( !deadEnds.contains( new Point(loc.x, loc.y-1) ) && maze.moveUp() )
 					{
-						pastMoves.push( getOppositeDirection( move ) );
+						pastMoves.push( MazePanel.getOppositeDirection( move ) );
 						lastMove = Direction.UP;
 						futureMoves.push ( Direction.NONE );
 						futureMoves.push ( Direction.LEFT );
@@ -63,7 +64,7 @@ public class SmarterMazeWalker extends MazeWalker
 			case DOWN: 
 					if ( !deadEnds.contains( new Point(loc.x, loc.y+1) ) && maze.moveDown() )
 					{
-						pastMoves.push(  getOppositeDirection( move ) );
+						pastMoves.push(  MazePanel.getOppositeDirection( move ) );
 						lastMove = Direction.DOWN;
 						futureMoves.push ( Direction.NONE );
 						futureMoves.push ( Direction.LEFT );
@@ -74,7 +75,7 @@ public class SmarterMazeWalker extends MazeWalker
 			case LEFT:
 					if ( !deadEnds.contains( new Point(loc.x-1, loc.y) ) && maze.moveLeft() )
 					{
-						pastMoves.push(  getOppositeDirection( move ) );
+						pastMoves.push( MazePanel. getOppositeDirection( move ) );
 						lastMove = Direction.LEFT;
 						futureMoves.push ( Direction.NONE );
 						futureMoves.push ( Direction.LEFT );
@@ -85,7 +86,7 @@ public class SmarterMazeWalker extends MazeWalker
 			case RIGHT: 
 					if ( !deadEnds.contains( new Point(loc.x+1, loc.y) ) && maze.moveRight() )
 					{
-						pastMoves.push(  getOppositeDirection( move ) );
+						pastMoves.push(  MazePanel.getOppositeDirection( move ) );
 						lastMove = Direction.RIGHT;
 						futureMoves.push ( Direction.NONE );
 						futureMoves.push ( Direction.DOWN );
@@ -99,19 +100,6 @@ public class SmarterMazeWalker extends MazeWalker
 				break;		
 		}
 	}
-	
-	private Direction getOppositeDirection ( Direction d ) 
-	{
-		switch ( d )
-		{
-			case UP: return Direction.DOWN; 
-			case DOWN: return Direction.UP; 
-			case LEFT: return Direction.RIGHT; 
-			case RIGHT: return Direction.LEFT; 
-		}
-		return Direction.NONE;
-	}
-
 	
 	public String getName ()
 	{

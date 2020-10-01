@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Stack;
 
 import maze.MazePanel;
+import maze.MazePanel.Direction;
 
 /**
  * This class represents a "walker." The brilliant walker remembers the previous
@@ -110,22 +111,9 @@ public class BrilliantMazeWalker extends MazeWalker
 		}
 	}
 	
-	private Direction getOppositeDirection ( Direction d ) 
-	{
-		switch ( d )
-		{
-			case UP: return Direction.DOWN; 
-			case DOWN: return Direction.UP; 
-			case LEFT: return Direction.RIGHT; 
-			case RIGHT: return Direction.LEFT; 
-		}
-		return Direction.NONE;
-	}
-
-	
 	public String getName ()
 	{
-		return "Smarter";
+		return "Brilliant";
 	}
 
 

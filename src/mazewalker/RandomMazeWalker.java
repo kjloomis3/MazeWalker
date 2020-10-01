@@ -3,6 +3,7 @@ package mazewalker;
 import java.util.Random;
 
 import maze.MazePanel;
+import maze.MazePanel.Direction;
 
 /**
  * Represents a random "walker." This is a randomized, very simplistic
@@ -47,24 +48,11 @@ public class RandomMazeWalker extends MazeWalker
 	private Direction getRandomDirection ( )
 	{
 		Direction move = Direction.values()[randomizer.nextInt ( 4 )];
-		while ( move == getOppositeDirection ( lastMove ) )
+		while ( move == MazePanel.getOppositeDirection ( lastMove ) )
 			move = Direction.values()[randomizer.nextInt ( 4 )];
 		lastMove = move;
 		return move;
 	}
-	
-	private Direction getOppositeDirection ( Direction d ) 
-	{
-		switch ( d )
-		{
-			case UP: return Direction.DOWN; 
-			case DOWN: return Direction.UP; 
-			case LEFT: return Direction.RIGHT; 
-			case RIGHT: return Direction.LEFT; 
-		}
-		return Direction.NONE;
-	}
-
 	
 	public String getName ()
 	{

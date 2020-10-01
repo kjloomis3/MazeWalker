@@ -5,7 +5,6 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
 
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -17,10 +16,15 @@ import javax.swing.JPanel;
  */
 public class MazePanel extends JPanel 
 {
+	
+	/** Represents a movement direction **/
+	public enum Direction {UP, RIGHT, DOWN, LEFT, NONE};
+	
 	static final int NUM_STEPS = 50;
 	public static final int SQUARE_SIZE = 25;
 	public static final int BORDER_X = 20;
 	public static final int BORDER_Y = 20;
+	public static final int MAX_SIZE = 20;
 	private int size;
 	private Room [][] maze;
 	private int currentRow;
@@ -238,6 +242,24 @@ public class MazePanel extends JPanel
 	}
 	
 	/**
+	 * Moves the MazeWalker in the direction specified if possible.
+	 * @param direction: the direction in which to move
+	 * @return true of the walker was able to move in the given direction,
+	 * otherwise returns false.
+	 */
+	public boolean move ( Direction direction )
+	{
+		switch ( direction )
+		{
+		case UP: 		return moveUp();
+		case LEFT: 	return moveLeft();
+		case DOWN:	return moveDown();
+		case RIGHT:	return moveRight();
+		default:			return false;
+		}
+	}
+	
+	/**
 	 * Moves the maze walker up into the adjoining room if it is possible
 	 * to do so.
 	 * @return boolean: true if the walker was able to move, false otherwise.
@@ -382,6 +404,39 @@ public class MazePanel extends JPanel
 	public int getMazeSize() 
 	{
 		return this.size;
+	}
+	
+	/**
+	 * Produces the room that the MazeWalker is currently in.
+	 * @return The current room if the MazeWalker is within the map,
+	 * otherwise returns null.
+	 */
+	public Room getCurrentRoom ( )
+	{
+		if ( currentRow < 0 || currentCol < 0 || 
+				currentRow >= size || currentCol >= size )
+		{
+			return null;
+		}
+		return maze[currentRow][currentCol];
+	}
+	
+	/**
+	 * Produce the opposite direction from the given direction.
+	 * @param direction: the direction to determine the opposite
+	 * @return the opposite direction of the given one. The opposite of
+	 * NONE is NONE.
+	 */
+	public static Direction getOppositeDirection ( Direction direction ) 
+	{
+		switch ( direction )
+		{
+			case UP: return Direction.DOWN; 
+			case DOWN: return Direction.UP; 
+			case LEFT: return Direction.RIGHT; 
+			case RIGHT: return Direction.LEFT; 
+		}
+		return Direction.NONE;
 	}
 	
 }

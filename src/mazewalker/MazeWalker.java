@@ -15,8 +15,6 @@ import maze.MazePanel;
  */
 public abstract class MazeWalker 
 {
-	/** Represents a movement direction **/
-	public enum Direction {UP, RIGHT, DOWN, LEFT, NONE};
 	
 	/**
 	 * Attempts to solve the maze by making what the walker perceives as the best
@@ -28,7 +26,7 @@ public abstract class MazeWalker
 	public abstract void Solve ( MazePanel maze );
 	
 	/**
-	 * Procudes the name of the walker.
+	 * Produces the name of the walker.
 	 * @return name: a string
 	 */
 	public abstract String getName ();

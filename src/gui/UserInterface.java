@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 
 import maze.MazePanel;
 import mazewalker.BrilliantMazeWalker;
+import mazewalker.GeniusMazeWalker;
 import mazewalker.MazeWalker;
 
 /**
@@ -80,6 +81,7 @@ public class UserInterface extends JPanel
 		//walker = new SmartMazeWalker();
 		//walker = new SmarterMazeWalker();
 		walker = new BrilliantMazeWalker();
+		//walker = new GeniusMazeWalker();
 	}
 
 	/**
