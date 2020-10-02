@@ -38,7 +38,7 @@ public class BrilliantMazeWalker extends MazeWalker
 	}
 	
 	@Override
-	public void Solve( MazePanel maze ) 
+	public void Solve( MazePanel maze, boolean delay ) 
 	{
 		Direction move = futureMoves.pop();
 		if ( move == Direction.NONE )
@@ -57,7 +57,7 @@ public class BrilliantMazeWalker extends MazeWalker
 			{
 				case UP:
 						if ( !pastMoves.contains( new Point(loc.x, loc.y-1) ) &&
-								!deadEnds.contains( new Point(loc.x, loc.y-1) ) && maze.moveUp() )
+								!deadEnds.contains( new Point(loc.x, loc.y-1) ) && maze.move(move, delay) )
 						{
 							pastMoves.push( loc );
 							lastMove = Direction.UP;
@@ -69,7 +69,7 @@ public class BrilliantMazeWalker extends MazeWalker
 						break;
 				case DOWN: 
 						if ( !pastMoves.contains( new Point(loc.x, loc.y+1) ) &&
-								!deadEnds.contains( new Point(loc.x, loc.y+1) ) && maze.moveDown() )
+								!deadEnds.contains( new Point(loc.x, loc.y+1) ) && maze.move(move, delay) )
 						{
 							pastMoves.push( loc );
 							lastMove = Direction.DOWN;
@@ -81,7 +81,7 @@ public class BrilliantMazeWalker extends MazeWalker
 						break;
 				case LEFT:
 						if ( !pastMoves.contains( new Point(loc.x-1, loc.y) ) &&
-								!deadEnds.contains( new Point(loc.x-1, loc.y) ) && maze.moveLeft() )
+								!deadEnds.contains( new Point(loc.x-1, loc.y) ) && maze.move(move, delay) )
 						{
 							pastMoves.push( loc );
 							lastMove = Direction.LEFT;
@@ -93,7 +93,7 @@ public class BrilliantMazeWalker extends MazeWalker
 						break;
 				case RIGHT: 
 						if ( !pastMoves.contains( new Point(loc.x+1, loc.y) ) &&
-								!deadEnds.contains( new Point(loc.x+1, loc.y) ) && maze.moveRight() )
+								!deadEnds.contains( new Point(loc.x+1, loc.y) ) && maze.move(move, delay) )
 						{
 							pastMoves.push( loc );
 							lastMove = Direction.RIGHT;

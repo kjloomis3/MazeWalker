@@ -31,13 +31,13 @@ public class GeniusMazeWalker extends MazeWalker
 	}
 	
 	@Override
-	public void Solve( MazePanel maze ) 
+	public void Solve( MazePanel maze, boolean delay ) 
 	{
 		int currentDistance = maze.getCurrentRoom().getDistanceToExit();
 		if ( currentDistance > lastDistance )
 		{
 			makingProgress = false;
-			maze.move(goback);
+			maze.move(goback, delay);
 		}
 		else
 		{
@@ -53,7 +53,7 @@ public class GeniusMazeWalker extends MazeWalker
 			lastDistance = currentDistance;
 			Direction dir = futureMoves.pop();
 			goback =  MazePanel.getOppositeDirection(dir);
-			maze.move ( dir );	
+			maze.move ( dir, delay );	
 		}
 	}
 	

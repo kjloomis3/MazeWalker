@@ -25,16 +25,10 @@ public class RandomMazeWalker extends MazeWalker
 	}
 	
 	@Override
-	public void Solve(MazePanel maze ) 
+	public void Solve(MazePanel maze, boolean delay )
 	{
 		Direction move = getRandomDirection();
-		switch ( move )
-		{
-			case UP: maze.moveUp(); break;
-			case DOWN: maze.moveDown(); break;
-			case LEFT: maze.moveLeft(); break;
-			case RIGHT: maze.moveRight(); break;
-		}
+		maze.move(move, delay);
 	}
 	
 

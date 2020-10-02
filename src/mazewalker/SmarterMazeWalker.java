@@ -37,7 +37,7 @@ public class SmarterMazeWalker extends MazeWalker
 	}
 	
 	@Override
-	public void Solve( MazePanel maze ) 
+	public void Solve( MazePanel maze, boolean delay ) 
 	{
 		Direction move = futureMoves.pop();
 		if ( move == Direction.NONE )
@@ -51,7 +51,7 @@ public class SmarterMazeWalker extends MazeWalker
 		switch ( move )
 		{
 			case UP:
-					if ( !deadEnds.contains( new Point(loc.x, loc.y-1) ) && maze.moveUp() )
+					if ( !deadEnds.contains( new Point(loc.x, loc.y-1) ) && maze.move(move, delay) )
 					{
 						pastMoves.push( MazePanel.getOppositeDirection( move ) );
 						lastMove = Direction.UP;
@@ -62,7 +62,7 @@ public class SmarterMazeWalker extends MazeWalker
 					}
 					break;
 			case DOWN: 
-					if ( !deadEnds.contains( new Point(loc.x, loc.y+1) ) && maze.moveDown() )
+					if ( !deadEnds.contains( new Point(loc.x, loc.y+1) ) && maze.move(move, delay) )
 					{
 						pastMoves.push(  MazePanel.getOppositeDirection( move ) );
 						lastMove = Direction.DOWN;
@@ -73,7 +73,7 @@ public class SmarterMazeWalker extends MazeWalker
 					}
 					break;
 			case LEFT:
-					if ( !deadEnds.contains( new Point(loc.x-1, loc.y) ) && maze.moveLeft() )
+					if ( !deadEnds.contains( new Point(loc.x-1, loc.y) ) && maze.move(move, delay) )
 					{
 						pastMoves.push( MazePanel. getOppositeDirection( move ) );
 						lastMove = Direction.LEFT;
@@ -84,7 +84,7 @@ public class SmarterMazeWalker extends MazeWalker
 					}
 					break;
 			case RIGHT: 
-					if ( !deadEnds.contains( new Point(loc.x+1, loc.y) ) && maze.moveRight() )
+					if ( !deadEnds.contains( new Point(loc.x+1, loc.y) ) && maze.move(move, delay))
 					{
 						pastMoves.push(  MazePanel.getOppositeDirection( move ) );
 						lastMove = Direction.RIGHT;

@@ -33,7 +33,7 @@ public class SmartMazeWalker extends MazeWalker
 	}
 	
 	@Override
-	public void Solve( MazePanel maze ) 
+	public void Solve( MazePanel maze, boolean delay ) 
 	{
 		Direction move = futureMoves.pop();
 		if ( move == Direction.NONE )
@@ -41,7 +41,18 @@ public class SmartMazeWalker extends MazeWalker
 			move = pastMoves.pop();
 		}
 		System.out.println( move );
-		lastMove = Direction.NONE;
+		
+		pastMoves.push( MazePanel.getOppositeDirection( move ) );
+		lastMove =  move;
+		
+		for ( Direction d : Direction.values() )
+		{
+			if ( d != move  )
+				futureMoves.push(d);
+		}
+		
+		/*
+		
 		switch ( move )
 		{
 			case UP:
@@ -89,6 +100,7 @@ public class SmartMazeWalker extends MazeWalker
 					}
 					break;		
 		}
+		*/
 	}
 	
 	public String getName ()

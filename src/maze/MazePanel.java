@@ -209,7 +209,7 @@ public class MazePanel extends JPanel
 		 * will be drawn over.
 		 */
 		Dimension dim = getSize();
-		pen.setColor( Color.DARK_GRAY );
+		pen.setColor( Color.LIGHT_GRAY );
 		pen.fillRect( 0, 0, dim.width, dim.height );
 		pen.setColor( Color.BLACK );
 		/*
@@ -243,12 +243,15 @@ public class MazePanel extends JPanel
 	
 	/**
 	 * Moves the MazeWalker in the direction specified if possible.
+	 * @param delay 
 	 * @param direction: the direction in which to move
 	 * @return true of the walker was able to move in the given direction,
 	 * otherwise returns false.
 	 */
-	public boolean move ( Direction direction )
+	public boolean move ( Direction direction, boolean delay )
 	{
+		if ( delay )
+			moveDelay();
 		switch ( direction )
 		{
 		case UP: 		return moveUp();
@@ -257,6 +260,7 @@ public class MazePanel extends JPanel
 		case RIGHT:	return moveRight();
 		default:			return false;
 		}
+
 	}
 	
 	/**

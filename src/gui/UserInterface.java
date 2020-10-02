@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
@@ -36,6 +37,7 @@ public class UserInterface extends JPanel
 	private JComboBox<String> walkerChoice;
 	private JButton reset;
 	private JButton step;
+	private JButton play;
 	private MazeWalker walker;
 	private boolean done;
 
@@ -57,31 +59,41 @@ public class UserInterface extends JPanel
 		
 		InterfaceHandler listener = new InterfaceHandler();
 		this.setLayout( new BoxLayout(this, BoxLayout.Y_AXIS));
-
 		this.done = false;
 
-		JPanel buttonPanel = new JPanel();
-		buttonPanel.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
-		buttonPanel.setLayout( new BoxLayout(buttonPanel, BoxLayout.LINE_AXIS));
+		JPanel topButtonPanel = new JPanel();
+		topButtonPanel.setBorder(BorderFactory.createEmptyBorder(5,15,5,15));
+		topButtonPanel.setLayout( new BoxLayout(topButtonPanel, BoxLayout.LINE_AXIS));
 
 		walkerChoice = new JComboBox<String>( walkerList );
-		buttonPanel.add(walkerChoice);
+		topButtonPanel.add(walkerChoice);
 		walkerChoice.setSelectedIndex(0);
 		walkerChoice.addActionListener ( listener );
-		buttonPanel.add(Box.createRigidArea(new Dimension(5, 0)));
+		
+		this.add( topButtonPanel );
+		
+		JPanel bottomButtonPanel = new JPanel();
+		bottomButtonPanel.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
+		bottomButtonPanel.setLayout( new BoxLayout(bottomButtonPanel, BoxLayout.LINE_AXIS));
 		
 		reset = new JButton ( "Reset" );
-		buttonPanel.add(reset);
+		bottomButtonPanel.add(reset);
 		reset.setActionCommand( "RESET" );
 		reset.addActionListener( listener );
-		buttonPanel.add(Box.createRigidArea(new Dimension(5, 0)));
+		bottomButtonPanel.add(Box.createRigidArea(new Dimension(5, 0)));
 		
 		step = new JButton ( "Step" );
-		buttonPanel.add(step);
+		bottomButtonPanel.add(step);
 		step.setActionCommand( "STEP" );
 		step.addActionListener( listener );
+		bottomButtonPanel.add(Box.createRigidArea(new Dimension(5, 0)));
 
-		this.add( buttonPanel );
+		play = new JButton ( "Step+5" );
+		bottomButtonPanel.add(play);
+		play.setActionCommand( "STEP+5" );
+		play.addActionListener( listener );
+		
+		this.add( bottomButtonPanel );
 
 	}
 
@@ -129,8 +141,22 @@ public class UserInterface extends JPanel
 					ResetWalker ( walkerChoice.getSelectedIndex() );
 					walkerChoice.setEnabled(false);
 				}
-				walker.Solve ( maze );
+				walker.Solve ( maze, false );
 				break;
+			case "STEP+5":
+				if ( walker == null )
+				{
+					ResetWalker ( walkerChoice.getSelectedIndex() );
+					walkerChoice.setEnabled(false);
+				}
+				step.setEnabled(false);
+				play.setEnabled(false);
+				for ( int i=0; i< 5 && !maze.foundGoal() ; i++ )
+				{
+					walker.Solve(maze, false);
+				}
+				step.setEnabled(true);
+				play.setEnabled(true);
 			}
 			//System.out.println( action );
 

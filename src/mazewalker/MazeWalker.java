@@ -23,7 +23,7 @@ public abstract class MazeWalker
 	 * "intelligence" of the walker.  
 	 * @param maze: a MazePanel object
 	 */
-	public abstract void Solve ( MazePanel maze );
+	public abstract void Solve ( MazePanel maze, boolean delay );
 	
 	/**
 	 * Produces the name of the walker.
