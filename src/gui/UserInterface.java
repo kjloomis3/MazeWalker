@@ -37,7 +37,8 @@ public class UserInterface extends JPanel
 	private JComboBox<String> walkerChoice;
 	private JButton reset;
 	private JButton step;
-	private JButton play;
+	private JButton step5;
+	private JButton step10;
 	private MazeWalker walker;
 	private boolean done;
 
@@ -88,10 +89,16 @@ public class UserInterface extends JPanel
 		step.addActionListener( listener );
 		bottomButtonPanel.add(Box.createRigidArea(new Dimension(5, 0)));
 
-		play = new JButton ( "Step+5" );
-		bottomButtonPanel.add(play);
-		play.setActionCommand( "STEP+5" );
-		play.addActionListener( listener );
+		step5 = new JButton ( "Step+5" );
+		bottomButtonPanel.add(step5);
+		step5.setActionCommand( "STEP+5" );
+		step5.addActionListener( listener );
+		bottomButtonPanel.add(Box.createRigidArea(new Dimension(5, 0)));
+		
+		step10 = new JButton ( "Step+10" );
+		bottomButtonPanel.add(step10);
+		step10.setActionCommand( "STEP+10" );
+		step10.addActionListener( listener );
 		
 		this.add( bottomButtonPanel );
 
@@ -132,6 +139,8 @@ public class UserInterface extends JPanel
 			case "RESET":
 				maze.Reset();
 				step.setEnabled(true);
+				step5.setEnabled(true);
+				step10.setEnabled(true);
 				walkerChoice.setEnabled(true);
 				walker = null;
 				break;
@@ -149,25 +158,35 @@ public class UserInterface extends JPanel
 					ResetWalker ( walkerChoice.getSelectedIndex() );
 					walkerChoice.setEnabled(false);
 				}
-				step.setEnabled(false);
-				play.setEnabled(false);
 				for ( int i=0; i< 5 && !maze.foundGoal() ; i++ )
 				{
 					walker.Solve(maze, false);
 				}
-				step.setEnabled(true);
-				play.setEnabled(true);
+			case "STEP+10":
+				if ( walker == null )
+				{
+					ResetWalker ( walkerChoice.getSelectedIndex() );
+					walkerChoice.setEnabled(false);
+				}
+				for ( int i=0; i< 10 && !maze.foundGoal() ; i++ )
+				{
+					walker.Solve(maze, false);
+				}
 			}
 			//System.out.println( action );
 
+			maze.repaint();
+			
 			if ( maze.foundGoal() )
 			{
 				JOptionPane.showMessageDialog ( null, 
 						"You have found your way out of the maze!" );
 				done = true;
 				step.setEnabled(false);
+				step5.setEnabled(false);
+				step10.setEnabled(false);
 			}
-			maze.repaint();
+
 		}
 	}
 

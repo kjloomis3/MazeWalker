@@ -1,7 +1,10 @@
 package maze;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Point;
 import java.util.Random;
 
 
@@ -18,8 +21,10 @@ public class Room {
 	private boolean doorUp, doorDown, doorLeft, doorRight;
 	private boolean containsWalker;
 	private boolean pastLocation;
+	private MazePanel.Direction pastDirection;
 	private int distanceToExit;
 	private static final Boolean DRAW_DISTANCE = false;
+	private static final boolean DRAW_DIRECTION = true;
 	
 	/**
 	 * Creates a room using randomly determined doorways. Each room may open
@@ -30,6 +35,7 @@ public class Room {
 		distanceToExit = dist;
 		containsWalker = false;
 		pastLocation = false;
+		pastDirection = MazePanel.Direction.NONE;
 		doorUp = doorDown = doorLeft = doorRight = false;
 		Random rdm = new Random( );
 		if ( rdm.nextInt( 3 ) > 0 )
@@ -56,10 +62,13 @@ public class Room {
 	 * Sets the room to not contain a walker. This affects how
 	 * the room will be drawn. 
 	 */
-	public void removeWalker() 
+	public void removeWalker(MazePanel.Direction direction) 
 	{
 		if ( this.containsWalker )
+		{
 			pastLocation = true;
+			pastDirection = direction;
+		}
 		this.containsWalker = false;
 	}
 
@@ -180,6 +189,41 @@ public class Room {
 		{
 			pen.drawString(Integer.toString(distanceToExit), 
 					x+MazePanel.SQUARE_SIZE/4, y+MazePanel.SQUARE_SIZE * 3/4 );
+		}
+		else if ( DRAW_DIRECTION)
+		{
+			Graphics2D g2D = (Graphics2D)  pen; 
+			g2D.setStroke(new BasicStroke(3));
+			g2D.setColor( Color.BLUE);
+			Point top = new Point(x+MazePanel.SQUARE_SIZE/2,  y+MazePanel.SQUARE_SIZE/4 );
+			Point right = new Point(x+ MazePanel.SQUARE_SIZE/4*3-1,  y+MazePanel.SQUARE_SIZE/2 );
+			Point bottom = new Point(x+MazePanel.SQUARE_SIZE/2,  y+MazePanel.SQUARE_SIZE/4*3-1 );
+			Point left = new Point(x+ MazePanel.SQUARE_SIZE/4, y+MazePanel.SQUARE_SIZE/2 );
+			switch ( pastDirection)
+			{
+			case UP:
+				g2D.drawLine( top.x, top.y, left.x,left.y );
+				g2D.drawLine( top.x, top.y, right.x, right.y );
+				g2D.drawLine( top.x, top.y, bottom.x, bottom.y );
+				break;
+			case RIGHT: // TODO
+				g2D.drawLine( right.x,right.y, top.x, top.y );
+				g2D.drawLine( right.x, right.y, bottom.x, bottom.y );
+				g2D.drawLine( right.x, right.y, left.x, left.y );
+				break;
+			case DOWN:
+				g2D.drawLine( bottom.x, bottom.y, left.x,left.y );
+				g2D.drawLine( bottom.x, bottom.y, right.x, right.y );
+				g2D.drawLine( bottom.x, bottom.y, top.x, top.y );
+				break;
+			case LEFT: // TODO
+				g2D.drawLine( left.x,left.y, top.x, top.y );
+				g2D.drawLine( left.x, left.y, bottom.x, bottom.y );
+				g2D.drawLine( left.x, left.y, right.x, right.y );
+				break;
+			}
+			g2D.setColor( Color.BLACK );
+			g2D.setStroke(new BasicStroke(1));
 		}
 	}
 }

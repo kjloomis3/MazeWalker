@@ -273,7 +273,7 @@ public class MazePanel extends JPanel
 		boolean moved = false;
 		if ( maze [currentRow] [currentCol].isOpenUp() )
 		{
-			maze [currentRow] [currentCol].removeWalker();
+			maze [currentRow] [currentCol].removeWalker(Direction.UP);
 			if ( currentRow-1 < 0 || maze [currentRow-1] [currentCol].isOpenDown()  )
 			{
 				currentRow--;
@@ -297,7 +297,7 @@ public class MazePanel extends JPanel
 		// TODO #7b: Write the method to allow the walker to move up.
 		if ( maze [currentRow] [currentCol].isOpenDown() )
 		{
-			maze [currentRow] [currentCol].removeWalker();
+			maze [currentRow] [currentCol].removeWalker(Direction.DOWN);
 			if (  currentRow+1 >= size || maze [currentRow+1] [currentCol].isOpenUp() )
 			{
 				currentRow++;
@@ -322,7 +322,7 @@ public class MazePanel extends JPanel
 		// TODO #7c: Write the method to allow the walker to move up.
 		if ( maze [currentRow] [currentCol].isOpenLeft() )
 		{
-			maze [currentRow] [currentCol].removeWalker();
+			maze [currentRow] [currentCol].removeWalker(Direction.LEFT);
 			if ( currentCol-1 < 0 || maze [currentRow] [currentCol-1].isOpenRight() )
 			{
 				currentCol--;
@@ -346,7 +346,7 @@ public class MazePanel extends JPanel
 		// TODO #7d: Write the method to allow the walker to move up.
 		if ( maze [currentRow] [currentCol].isOpenRight() )
 		{
-			maze [currentRow] [currentCol].removeWalker();
+			maze [currentRow] [currentCol].removeWalker(Direction.RIGHT);
 			if ( currentCol+1 >= size || maze [currentRow] [currentCol+1].isOpenLeft() )
 			{
 				currentCol++;
@@ -394,7 +394,7 @@ public class MazePanel extends JPanel
 		{
 			return;
 		}
-		maze [currentRow] [currentCol].removeWalker();
+		maze [currentRow] [currentCol].removeWalker(Direction.NONE);
 		currentRow = loc.y;
 		currentCol = loc.x;
 		maze [currentRow] [currentCol].InsertWalker();
