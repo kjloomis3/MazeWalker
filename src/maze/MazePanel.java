@@ -20,14 +20,29 @@ public class MazePanel extends JPanel
 	/** Represents a movement direction **/
 	public enum Direction {UP, RIGHT, DOWN, LEFT, NONE};
 	
+	@Deprecated
+	/** The maximum number of steps that a maze walker should make before "giving up." **/
 	static final int NUM_STEPS = 50;
+	
+	/** The length/width of the room in pixels (used for drawing) **/ 
 	public static final int SQUARE_SIZE = 25;
+	/** The width of the left/right border around in pixels (used for drawing) **/
 	public static final int BORDER_X = 20;
+	/** The width of the top/bottom border around in pixels (used for drawing) **/
 	public static final int BORDER_Y = 20;
-	public static final int MAX_SIZE = 20;
+	
+	/** The maximum number of rooms in the maze **/
+	public static final int MAX_SIZE = 30;
+	/** The minimum number of rooms in the maze **/
+	public static final int MIN_SIZE = 8;
+	
+	/** The dimensions of the maze: the number of rooms in each row and column. **/
 	private int size;
+	/** The 2-d array of rooms representing the maze **/ 
 	private Room [][] maze;
+	/** The current row location of the walker **/
 	private int currentRow;
+	/** The current column location of the walker **/
 	private int currentCol;
 
 	/**
@@ -294,7 +309,6 @@ public class MazePanel extends JPanel
 	public boolean moveDown() 
 	{
 		boolean moved = false;
-		// TODO #7b: Write the method to allow the walker to move up.
 		if ( maze [currentRow] [currentCol].isOpenDown() )
 		{
 			maze [currentRow] [currentCol].removeWalker(Direction.DOWN);
@@ -319,7 +333,6 @@ public class MazePanel extends JPanel
 	public boolean moveLeft() 
 	{
 		boolean moved = false;
-		// TODO #7c: Write the method to allow the walker to move up.
 		if ( maze [currentRow] [currentCol].isOpenLeft() )
 		{
 			maze [currentRow] [currentCol].removeWalker(Direction.LEFT);
@@ -343,7 +356,6 @@ public class MazePanel extends JPanel
 	public boolean moveRight() 
 	{
 		boolean moved = false;
-		// TODO #7d: Write the method to allow the walker to move up.
 		if ( maze [currentRow] [currentCol].isOpenRight() )
 		{
 			maze [currentRow] [currentCol].removeWalker(Direction.RIGHT);

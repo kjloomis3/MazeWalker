@@ -30,7 +30,7 @@ public class WalkerWindow
 		{
 			String strSize = JOptionPane.showInputDialog( "Please enter the size of the maze as an odd integer: ");
 			size = Integer.parseInt( strSize );
-		} while ( size % 2 == 0 || size <7 || size > MazePanel.MAX_SIZE );
+		} while ( size < MazePanel.MIN_SIZE || size > MazePanel.MAX_SIZE );
 		
 		UserInterface gui = new UserInterface ( size );
 		//window.setPreferredSize( new Dimension( gui.getWidth( ), gui.getHeight( ) ) );
