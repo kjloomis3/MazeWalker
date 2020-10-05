@@ -17,7 +17,7 @@ public class RandomMazeWalker extends MazeWalker
 	
 	private static Random randomizer = new Random ( );
 	
-	Direction lastMove;
+	private Direction lastMove;
 	
 	public RandomMazeWalker()
 	{
@@ -28,6 +28,7 @@ public class RandomMazeWalker extends MazeWalker
 	public void Solve(MazePanel maze, boolean delay )
 	{
 		Direction move = getRandomDirection();
+		System.out.print(move);
 		maze.move(move, delay);
 	}
 	

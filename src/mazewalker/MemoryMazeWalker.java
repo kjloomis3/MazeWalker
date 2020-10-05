@@ -11,7 +11,7 @@ import maze.MazePanel.Direction;
  * 
  * @author Ken Loomis (https://github.com/kjloomis3)
  */
-public class SmartMazeWalker extends MazeWalker
+public class MemoryMazeWalker extends MazeWalker
 {
 	
 	private Stack<Direction> futureMoves;
@@ -19,7 +19,7 @@ public class SmartMazeWalker extends MazeWalker
 	
 	Direction lastMove;
 	
-	public SmartMazeWalker()
+	public MemoryMazeWalker()
 	{
 		this.lastMove = Direction.NONE;
 
@@ -108,7 +108,7 @@ public class SmartMazeWalker extends MazeWalker
 	
 	public String getName ()
 	{
-		return "Smarter";
+		return "Memory";
 	}
 
 

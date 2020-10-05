@@ -18,9 +18,10 @@ import javax.swing.JPanel;
 import maze.MazePanel;
 import mazewalker.BrilliantMazeWalker;
 import mazewalker.GeniusMazeWalker;
+import mazewalker.LeftTurnMazeWalker;
 import mazewalker.MazeWalker;
 import mazewalker.RandomMazeWalker;
-import mazewalker.SmartMazeWalker;
+import mazewalker.MemoryMazeWalker;
 import mazewalker.SmarterMazeWalker;
 
 /**
@@ -32,7 +33,7 @@ import mazewalker.SmarterMazeWalker;
  */
 public class UserInterface extends JPanel
 {
-	private static final String [] walkerList = { "Random", "Smart", "Smarter", "Brilliant", "Genius" };
+	private static final String [] walkerList = { "Random", "Left-Turn", "Memory", "Smarter", "Brilliant", "Genius" };
 	private MazePanel maze;
 	private JComboBox<String> walkerChoice;
 	private JButton reset;
@@ -111,7 +112,8 @@ public class UserInterface extends JPanel
 			case "Genius": walker = new GeniusMazeWalker(); break;
 			case "Brilliant": walker = new BrilliantMazeWalker(); break;
 			case "Smarter": walker = new SmarterMazeWalker(); break;
-			case "Smart": walker = new SmartMazeWalker(); break;
+			case "Memory": walker = new MemoryMazeWalker(); break;
+			case "Left-Turn": walker = new LeftTurnMazeWalker(); break;
 			case "Random":
 			default: walker = new RandomMazeWalker(); break;
 		}

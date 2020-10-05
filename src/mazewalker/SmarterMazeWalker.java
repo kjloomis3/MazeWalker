@@ -75,7 +75,7 @@ public class SmarterMazeWalker extends MazeWalker
 			lastMove = move;
 			for ( Direction d : Direction.values() )
 			{
-				if ( d!= Direction.NONE && d != move )
+				if ( d!= Direction.NONE && d != MazePanel.getOppositeDirection( move ) )
 					futureMoves.push(d);
 			}
 		}
