@@ -22,7 +22,7 @@ import mazewalker.LeftTurnMazeWalker;
 import mazewalker.MazeWalker;
 import mazewalker.RandomMazeWalker;
 import mazewalker.MemoryMazeWalker;
-import mazewalker.SmarterMazeWalker;
+import mazewalker.RememberDeadEndsMazeWalker;
 
 /**
  * Creates the graphic user interface for the program. It includes
@@ -33,7 +33,7 @@ import mazewalker.SmarterMazeWalker;
  */
 public class UserInterface extends JPanel
 {
-	private static final String [] walkerList = { "Random", "Left-Turn", "Memory", "Smarter", "Brilliant", "Genius" };
+	private static final String [] walkerList = { "Random", "Left-Turn", "Memory", "Remember Dead-Ends", "Brilliant", "Genius" };
 	private MazePanel maze;
 	private JComboBox<String> walkerChoice;
 	private JButton reset;
@@ -111,7 +111,7 @@ public class UserInterface extends JPanel
 		{
 			case "Genius": walker = new GeniusMazeWalker(); break;
 			case "Brilliant": walker = new BrilliantMazeWalker(); break;
-			case "Smarter": walker = new SmarterMazeWalker(); break;
+			case "Remember Dead-Ends": walker = new RememberDeadEndsMazeWalker(); break;
 			case "Memory": walker = new MemoryMazeWalker(); break;
 			case "Left-Turn": walker = new LeftTurnMazeWalker(); break;
 			case "Random":

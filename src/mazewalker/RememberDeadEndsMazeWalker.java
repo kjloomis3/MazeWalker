@@ -8,21 +8,25 @@ import maze.MazePanel;
 import maze.MazePanel.Direction;
 
 /**
- * This class represents a "walker." The smarter walker remembers the previous
- * moves that it made, and attempts to avoid retracing its steps. 
+ * This class represents a "walker." The RememberDeadEndsMazeWalker remembers the previous
+ * moves that it made, and attempts to avoid retracing its steps. It also remembers portions of
+ * the maze that result in dead ends (no solution) and avoids those as well. However, it doesn't
+ * detect if it ends of in a cycle. 
  * 
  * @author Ken Loomis (https://github.com/kjloomis3)
  */
-public class SmarterMazeWalker extends MazeWalker
+public class RememberDeadEndsMazeWalker extends MazeWalker
 {
-	
+	/** The moves to make in the future. **/
 	private Stack<Direction> futureMoves;
+	/** The previous moves made **/
 	private Stack<Direction> pastMoves;
+	/** Locations that result in a dead end in the maze **/
 	private ArrayList<Point> deadEnds;
 	
 	Direction lastMove;
 	
-	public SmarterMazeWalker()
+	public RememberDeadEndsMazeWalker()
 	{
 		this.lastMove = Direction.NONE;
 
@@ -81,9 +85,10 @@ public class SmarterMazeWalker extends MazeWalker
 		}
 	}
 	
+	@Override
 	public String getName ()
 	{
-		return "Smarter";
+		return "Remember Dead-Ends";
 	}
 
 
