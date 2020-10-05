@@ -28,10 +28,11 @@ public class SmarterMazeWalker extends MazeWalker
 
 		futureMoves = new Stack<Direction>( );
 		futureMoves.push ( Direction.NONE );
-		futureMoves.push ( Direction.LEFT );
-		futureMoves.push ( Direction.DOWN );
-		futureMoves.push ( Direction.RIGHT );
-		futureMoves.push ( Direction.UP );
+		for ( Direction d : Direction.values() )
+		{
+			if ( d != Direction.NONE )
+				futureMoves.push(d);
+		}
 		pastMoves = new Stack<Direction>( );
 		deadEnds = new ArrayList<Point>( );
 	}
@@ -48,56 +49,35 @@ public class SmarterMazeWalker extends MazeWalker
 		System.out.println( move );
 		lastMove = Direction.NONE;
 		Point loc = maze.getLocation( );
+		
+		boolean moved = false;
 		switch ( move )
 		{
 			case UP:
-					if ( !deadEnds.contains( new Point(loc.x, loc.y-1) ) && maze.move(move, delay) )
-					{
-						pastMoves.push( MazePanel.getOppositeDirection( move ) );
-						lastMove = Direction.UP;
-						futureMoves.push ( Direction.NONE );
-						futureMoves.push ( Direction.LEFT );
-						futureMoves.push ( Direction.RIGHT );
-						futureMoves.push ( Direction.UP );
-					}
+					moved = !deadEnds.contains( new Point(loc.x, loc.y-1) ) && maze.move(move, delay);
 					break;
 			case DOWN: 
-					if ( !deadEnds.contains( new Point(loc.x, loc.y+1) ) && maze.move(move, delay) )
-					{
-						pastMoves.push(  MazePanel.getOppositeDirection( move ) );
-						lastMove = Direction.DOWN;
-						futureMoves.push ( Direction.NONE );
-						futureMoves.push ( Direction.LEFT );
-						futureMoves.push ( Direction.DOWN );
-						futureMoves.push ( Direction.RIGHT );
-					}
+					moved = !deadEnds.contains( new Point(loc.x, loc.y+1) ) && maze.move(move, delay);
 					break;
 			case LEFT:
-					if ( !deadEnds.contains( new Point(loc.x-1, loc.y) ) && maze.move(move, delay) )
-					{
-						pastMoves.push( MazePanel. getOppositeDirection( move ) );
-						lastMove = Direction.LEFT;
-						futureMoves.push ( Direction.NONE );
-						futureMoves.push ( Direction.LEFT );
-						futureMoves.push ( Direction.DOWN );
-						futureMoves.push ( Direction.UP );
-					}
+					moved = !deadEnds.contains( new Point(loc.x-1, loc.y) ) && maze.move(move, delay);
 					break;
 			case RIGHT: 
-					if ( !deadEnds.contains( new Point(loc.x+1, loc.y) ) && maze.move(move, delay))
-					{
-						pastMoves.push(  MazePanel.getOppositeDirection( move ) );
-						lastMove = Direction.RIGHT;
-						futureMoves.push ( Direction.NONE );
-						futureMoves.push ( Direction.DOWN );
-						futureMoves.push ( Direction.RIGHT );
-						futureMoves.push ( Direction.UP );
-					}
+					moved = !deadEnds.contains( new Point(loc.x+1, loc.y) ) && maze.move(move, delay);
 					break;
 			case NONE:
-				break;
 			default:
 				break;		
+		}
+		if ( moved )
+		{
+			pastMoves.push( MazePanel.getOppositeDirection( move ) );
+			lastMove = move;
+			for ( Direction d : Direction.values() )
+			{
+				if ( d!= Direction.NONE && d != move )
+					futureMoves.push(d);
+			}
 		}
 	}
 	

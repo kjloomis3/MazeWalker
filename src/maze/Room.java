@@ -206,7 +206,7 @@ public class Room {
 				g2D.drawLine( top.x, top.y, right.x, right.y );
 				g2D.drawLine( top.x, top.y, bottom.x, bottom.y );
 				break;
-			case RIGHT: // TODO
+			case RIGHT:
 				g2D.drawLine( right.x,right.y, top.x, top.y );
 				g2D.drawLine( right.x, right.y, bottom.x, bottom.y );
 				g2D.drawLine( right.x, right.y, left.x, left.y );
@@ -216,7 +216,7 @@ public class Room {
 				g2D.drawLine( bottom.x, bottom.y, right.x, right.y );
 				g2D.drawLine( bottom.x, bottom.y, top.x, top.y );
 				break;
-			case LEFT: // TODO
+			case LEFT:
 				g2D.drawLine( left.x,left.y, top.x, top.y );
 				g2D.drawLine( left.x, left.y, bottom.x, bottom.y );
 				g2D.drawLine( left.x, left.y, right.x, right.y );

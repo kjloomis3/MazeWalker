@@ -25,10 +25,11 @@ public class SmartMazeWalker extends MazeWalker
 
 		futureMoves = new Stack<Direction>( );
 		futureMoves.push ( Direction.NONE );
-		futureMoves.push ( Direction.LEFT );
-		futureMoves.push ( Direction.DOWN );
-		futureMoves.push ( Direction.RIGHT );
-		futureMoves.push ( Direction.UP );
+		for ( Direction d : Direction.values() )
+		{
+			if ( d != Direction.NONE )
+				futureMoves.push(d);
+		}
 		pastMoves = new Stack<Direction>( );
 	}
 	
@@ -41,16 +42,18 @@ public class SmartMazeWalker extends MazeWalker
 			move = pastMoves.pop();
 		}
 		System.out.println( move );
-		
-		pastMoves.push( MazePanel.getOppositeDirection( move ) );
-		lastMove =  move;
-		
-		for ( Direction d : Direction.values() )
+		if (maze.move(move, delay))
 		{
-			if ( d != move  )
-				futureMoves.push(d);
+			pastMoves.push( MazePanel.getOppositeDirection( move ) );
+			lastMove =  move;
+			
+			futureMoves.push ( Direction.NONE );
+			for ( Direction d : Direction.values() )
+			{
+				if ( d != Direction.NONE && d != move )
+					futureMoves.push(d);
+			}
 		}
-		
 		/*
 		
 		switch ( move )
