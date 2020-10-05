@@ -6,22 +6,21 @@ import maze.MazePanel;
 import maze.MazePanel.Direction;
 
 /**
- * This class represents a "walker." The smart walker remembers the previous
- * moves that it made, and attempts to avoid retracing its steps. 
+ * This class represents a "walker." The MemoryWalker remembers the previous
+ * moves that it made, and attempts to avoid retracing its steps by not backtracking
+ * to the immediate last move,
  * 
  * @author Ken Loomis (https://github.com/kjloomis3)
  */
 public class MemoryMazeWalker extends MazeWalker
 {
-	
+	/** The moves to make in the future. **/
 	private Stack<Direction> futureMoves;
+	/** The previous moves made **/
 	private Stack<Direction> pastMoves;
-	
-	Direction lastMove;
 	
 	public MemoryMazeWalker()
 	{
-		this.lastMove = Direction.NONE;
 
 		futureMoves = new Stack<Direction>( );
 		futureMoves.push ( Direction.NONE );
@@ -45,7 +44,6 @@ public class MemoryMazeWalker extends MazeWalker
 		if (maze.move(move, delay))
 		{
 			pastMoves.push( MazePanel.getOppositeDirection( move ) );
-			lastMove =  move;
 			
 			futureMoves.push ( Direction.NONE );
 			for ( Direction d : Direction.values() )
@@ -54,56 +52,6 @@ public class MemoryMazeWalker extends MazeWalker
 					futureMoves.push(d);
 			}
 		}
-		/*
-		
-		switch ( move )
-		{
-			case UP:
-					if ( maze.moveUp() )
-					{
-						pastMoves.push( MazePanel.getOppositeDirection( move ) );
-						lastMove = Direction.UP;
-						futureMoves.push ( Direction.NONE );
-						futureMoves.push ( Direction.LEFT );
-						futureMoves.push ( Direction.RIGHT );
-						futureMoves.push ( Direction.UP );
-					}
-					break;
-			case DOWN: 
-					if ( maze.moveDown() )
-					{
-						pastMoves.push( MazePanel.getOppositeDirection( move ) );
-						lastMove = Direction.DOWN;
-						futureMoves.push ( Direction.NONE );
-						futureMoves.push ( Direction.LEFT );
-						futureMoves.push ( Direction.DOWN );
-						futureMoves.push ( Direction.RIGHT );
-					}
-					break;
-			case LEFT:
-					if ( maze.moveLeft() )
-					{
-						pastMoves.push(  MazePanel.getOppositeDirection( move ) );
-						lastMove = Direction.LEFT;
-						futureMoves.push ( Direction.NONE );
-						futureMoves.push ( Direction.LEFT );
-						futureMoves.push ( Direction.DOWN );
-						futureMoves.push ( Direction.UP );
-					}
-					break;
-			case RIGHT: 
-					if ( maze.moveRight() )
-					{
-						pastMoves.push(  MazePanel.getOppositeDirection( move ) );
-						lastMove = Direction.RIGHT;
-						futureMoves.push ( Direction.NONE );
-						futureMoves.push ( Direction.DOWN );
-						futureMoves.push ( Direction.RIGHT );
-						futureMoves.push ( Direction.UP );
-					}
-					break;		
-		}
-		*/
 	}
 	
 	public String getName ()
